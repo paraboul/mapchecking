@@ -31,6 +31,10 @@ var vue = new Vue({
 
             return fin.join(';')
         },
+
+        surface_feet: function() {
+            return (this.surface * 10.764).toFixed(2);
+        }
     },
 
     watch: {

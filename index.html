@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html xml:lang="en" lang="en">
 <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
-    <title>MapChecking - Vérificateur de densité urbaine</title>
+    <title>MapChecking - Crowd size estimator</title>
     <link rel="stylesheet" href="./css/style.css?3">
     <meta name="author" content="Anthony Catel"/>
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://www.mapchecking.com/" />
     <meta property="og:image" content="https://www.mapchecking.com/img/socialimage.png" />
     <meta property="og:site_name" content="MapChecking" />
-    <meta property="og:description" content="MapChecking - Vérificateur de densité urbaine" />
+    <meta property="og:description" content="MapChecking - Crowd size estimator - fact checking" />
     <link rel="shortcut icon" type="image/ico" href="./img/favicon.ico"/>
 </head>
 <body>
@@ -21,41 +21,46 @@
         <div id="map"></div>
     </div>
     <div id="main">
-        <h1>Densité urbaine maximale - Fact checking</h1>
+        <h1>Mapchecking - Crowd size estimation</h1>
         <div class="desc"><p>
-            <strong>Cet outil permet de vérifier le nombre maximal de personnes pouvant se situer dans une zone.</strong><br /><br />
-            Cliquez sur la carte pour ajouter des points et dessiner une zone.<br />
-            <strong>Copier l'adresse complète pour partager le résultat.</strong>
+            <strong>This tool helps you estimate (and fact-check) the maximum number of people standing in a given area</strong><br /><br />
+            Click on the map to start delimiting the area.<br />
+            <strong>Copy the URL to share the result.</strong>
         </p></div>
 
         <div id="form">
             <div class="info" v-bind:class="{ dn: isEmpty }">
-                <a id="resetzone" class="btn" href="javascript:void(0)">Effacer la zone</a>
+                <a id="resetzone" class="btn" href="javascript:void(0)">Reset the area</a>
             </div>
 
-            <div class="label">Surface de la zone</div>
-            <div class="info">{{ surface }}m<sup>2</sup> <span v-if="surface == 0"><small>Dessinez d'abord une zone sur la carte</small></div>
-            <div class="label">Nombre de personnes par m<sup>2</sup></div>
-            <div class="label"><small><a href="http://www.gkstill.com/Support/crowd-density/625sm/Density6.html" target="_blank">Voir à quoi cela correspond</a></small></div>
-            <div class="info"><input v-model="density" id="density" type="range" step="0.1" min="0.1" v-bind:max="maxdensity" />{{ density }} personne{{ density | pluralize }} par m<sup>2</sup></div>
+            <div class="label">Surface area</div>
+            <div class="info">{{ surface }}m<sup>2</sup> or {{ surface_feet }}ft<sup>2</sup> <span v-if="surface == 0"><small>Please delimit an area on the map</small></div>
+            <div class="label">Number of people per square meter <small>(m<sup>2</sup>)</small></div>
+            <div class="label"><small><a href="http://www.gkstill.com/Support/crowd-density/625sm/Density6.html" target="_blank">What does it look like?</a></small></div>
+            <div class="info"><input v-model="density" id="density" type="range" step="0.1" min="0.1" v-bind:max="maxdensity" />{{ density }} people par m<sup>2</sup> <small>(~10f<sup>2</sup>)</small></div>
 
-            <div class="label">Nombre maximum de personnes</div>
-            <div class="info bigger">{{ maxpersonne }} <span v-if="surface == 0"><small>Dessinez d'abord une zone sur la carte</small></span></div>
+            <div class="label">Estimation</div>
+            <div class="info bigger"><span v-if="surface == 0"><small>Please delimit an area on the map</small></span><span v-else>{{ maxpersonne }}</span></div>
 
             <hr />
             <div class="exemples">
-                Exemples :<br />
+                Examples :<br />
                 <a class="btnlarge" href="https://goo.gl/dzyP85">Place du Trocadero</a>
                 <a class="btnlarge" href="https://goo.gl/nvlodI">Place de la République</a>
             </div>
             <div>
-                <span>Outil réalisé par Anthony Catel</span>
+
+                <p style="line-height: 24px; font-size: 14px;">
+                    MapChecking is a non profit and open source project.<br />
+                    The cost of the Google Map API has become unsustainabble for an indidividual.<br />Support MapChecking by becoming a patron :<br /><br />
+                    <a href="https://www.patreon.com/bePatron?u=10249617" data-patreon-widget-type="become-patron-button">Become a Patron!</a><script async src="https://c6.patreon.com/becomePatronButton.bundle.js"></script>
+                </p>
+                <span>Created by Anthony Catel</span>
                 <a href="https://twitter.com/paraboul" class="twitter-follow-button"  data-show-count="true">Follow @paraboul</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script><br />
-                <span style="font-size: 10px;">MapChecking n'est affilié à aucun parti ou institution.</span>
             </div>
         </div>
     </div>
-    <script src="./js/main.js?4"></script>
+    <script src="./js/main.js?5"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7Vm3gm4Fm7jSkuIh_yM14GmYhz1P_S4M&libraries=geometry,places&callback=initMap"></script>
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
