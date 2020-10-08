@@ -38,9 +38,9 @@
             <div class="shadow-md md:rounded-md px-4 py-3 bg-white md:mt-4 mb-4 md:mb-8">
                 <h2 class="font-bold mb-2">Examples</h2>
 
-                <a href="https://www.mapchecking.com/#bAABAQJtzQ0LZXRJAAACQQRh0Q0JORBJA03NDQsdDEkC4c0NCrU4SQF5zQ0IFUhJAJnNDQoBWEkD5ckNCglsSQCFzQ0J_ZhJAlXNDQsdwEkDVc0NCT3ESQA90Q0LgfRJAXXRDQnh8EkAhdENCQHASQFB0Q0K9bBJAqXRDQu9uEkDadENCwGkSQHl0Q0JSZhJAe3RDQiNhEkB-dENCaV4SQNt0Q0KnXBJA4XRDQkJYEkCYdENC9lgSQGp0Q0LAWRJAWnRDQuhXEkC8dENC-k0SQH90Q0K2SRJAD3RDQiNREkA" class="inline-block btn rounded-md mr-3 mb-2 text-sm">Place du Trocadeo - Paris</a>
-                <a href="https://www.mapchecking.com/#bAAAAQEJ4Q0IdShdAAACQQcp4Q0IfKxdAeXlDQtI7F0CseENClVIXQNl3Q0IeaBdAG3dDQnlYF0A" class="inline-block btn rounded-md mr-3 mb-2 text-sm">Place de la République</a>
-                <a href="https://www.mapchecking.com/#bAAAAQHoRUkLzzlVBAABwQRsPUkISoVVB0A5SQhKhVUF_EFJChAhWQccQUkJBCFZB" class="inline-block btn rounded-md mr-3 mb-2 text-sm">Tiergatern - Berlin</a>
+                <a href="javascript:void(0)" @click="$refs.map.reloadHash('bAABAQJtzQ0LZXRJAAACQQRh0Q0JORBJA03NDQsdDEkC4c0NCrU4SQF5zQ0IFUhJAJnNDQoBWEkD5ckNCglsSQCFzQ0J_ZhJAlXNDQsdwEkDVc0NCT3ESQA90Q0LgfRJAXXRDQnh8EkAhdENCQHASQFB0Q0K9bBJAqXRDQu9uEkDadENCwGkSQHl0Q0JSZhJAe3RDQiNhEkB-dENCaV4SQNt0Q0KnXBJA4XRDQkJYEkCYdENC9lgSQGp0Q0LAWRJAWnRDQuhXEkC8dENC-k0SQH90Q0K2SRJAD3RDQiNREkA')" class="inline-block btn rounded-md mr-3 mb-2 text-sm">Place du Trocadeo - Paris</a>
+                <a href="javascript:void(0)" @click="$refs.map.reloadHash('bAAAAQEJ4Q0IdShdAAACQQcp4Q0IfKxdAeXlDQtI7F0CseENClVIXQNl3Q0IeaBdAG3dDQnlYF0A')" class="inline-block btn rounded-md mr-3 mb-2 text-sm">Place de la République</a>
+                <a href="javascript:void(0)" @click="$refs.map.reloadHash('bAAAAQHoRUkLzzlVBAABwQRsPUkISoVVB0A5SQhKhVUF_EFJChAhWQccQUkJBCFZB')" class="inline-block btn rounded-md mr-3 mb-2 text-sm">Tiergatern - Berlin</a>
             </div>
 
             <div class="flex justify-around text-center order-last bg-white p-3 text-xs tracking-tight border-t border-gray-300">

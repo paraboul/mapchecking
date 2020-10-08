@@ -158,6 +158,13 @@
                 this.$emit('surfaceUpdate', this.surface);
             },
 
+            reloadHash(hash) {
+                this.loadHash(hash);
+
+                ["insert_at", "remove_at", "set_at"].forEach(ev => google.maps.event.addListener(this.$poly.getPath(), ev, this.surfaceUpdated));
+                this.updatePolygonColor();
+            },
+
             loadHash(hash) {
                 if (hash[0] != 'b') {
                     return this.loadLegacyHash(hash);
@@ -192,7 +199,7 @@
 
             loadLegacyHash(hash) {
                 let opt = hash.split(';');
-                console.log(opt);
+
                 let curPosition = opt.pop();
 
                 if (curPosition) {
