@@ -1,7 +1,8 @@
 <template>
-
+    <div class="w-full h-full">
+        <input id="pac-input" class="controls" :class="[mapLoaded ? '' : 'hidden']" type="text" placeholder="Search Box">
         <div class="w-full h-full" id="map"></div>
-
+    </div>
 </template>
 
 <script>
@@ -36,9 +37,32 @@
                         lat: this.mapPosition[0],
                         lng: this.mapPosition[1]
                     },
-                    mapTypeId: 'roadmap'
+                    mapTypeId: 'roadmap',
+                    gestureHandling: 'greedy'
                 });
 
+                const input = document.getElementById('pac-input');
+                const searchBox = new google.maps.places.SearchBox(input);
+                map.controls[google.maps.ControlPosition.LEFT_TOP].push(input);
+
+                searchBox.addListener('places_changed', () => {
+                    var places = searchBox.getPlaces();
+
+                    if (places.length == 0) {
+                        return;
+                    }
+
+                    var place = places[0];
+
+                    map.setCenter(place.geometry.location);
+                    map.setZoom(17);
+
+                    this.reset();
+                });
+
+                map.addListener('bounds_changed', function() {
+                    searchBox.setBounds(map.getBounds());
+                });
                 map.addListener('center_changed', this.mapUpdated);
                 map.addListener('zoom_changed', this.mapUpdated);
                 map.addListener('click', this.mapClicked);
@@ -46,7 +70,8 @@
                 map.setOptions({
                     draggableCursor:'crosshair',
                     clickableIcons: false,
-                    disableDoubleClickZoom: true
+                    disableDoubleClickZoom: true,
+                    streetViewControl: false
                 });
 
                 this.$map = map;
@@ -72,6 +97,7 @@
                 this.updatePolygonColor();
 
                 this.$updateHashTimer = null;
+                this.mapLoaded = true;
             });
         },
 
@@ -122,9 +148,7 @@
             },
 
             mapClicked(ev) {
-                const path = this.$poly.getPath();
-
-                path.push(ev.latLng);
+                this.$poly.getPath().push(ev.latLng);
             },
 
             surfaceUpdated() {
@@ -220,7 +244,8 @@
             return {
                 mapPosition: [48.862895, 2.286978, 18],
                 surface: 0,
-                arrPoly: []
+                arrPoly: [],
+                mapLoaded: false
             }
         }
     }
