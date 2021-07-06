@@ -46,7 +46,7 @@
             <div class="flex justify-around text-center order-last bg-white p-3 text-xs tracking-tight border-t border-gray-300">
                 <span>Created by Anthony Catel</span>
 
-                <a href="https://twitter.com/paraboul?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">Follow @paraboul</a>
+                <a href="https://twitter.com/antcatel?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">Follow @antcatel</a>
             </div>
 <!--             <div class="bottom-0 left-0 md:absolute h-8 bg-white border-t border-gray-300 w-full text-xs tracking-tight text-center py-2">Created by Anthony Catel</div> -->
         </div>
