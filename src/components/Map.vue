@@ -194,7 +194,7 @@
                     this.surfaceUpdated();
                 }
 
-                this.$emit('densityChange', parseInt(meta[0]));
+                this.$emit('densityChange', parseFloat(meta[0]));
             },
 
             loadLegacyHash(hash) {

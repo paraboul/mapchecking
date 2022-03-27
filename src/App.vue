@@ -73,7 +73,7 @@ export default {
         },
 
         densityUpdate(val) {
-            this.density = val;
+            this.density = Math.round(val * 100) / 100;
         },
 
         formatArea(val) {
