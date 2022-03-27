@@ -1,6 +1,6 @@
 <template>
     <div class="md:flex flex-1 md:items-stretch md:flex-row">
-        <div class="h-2/3 md:h-full w-full">
+        <div class="h-[60%] md:h-full w-full">
             <Map :density="density" :startHash="startHash" ref="map" @densityChange="densityUpdate" @hashChange="hashUpdate" @surfaceUpdate="surfaceUpdate" />
         </div>
         <div class="flex flex-col relative w-full lg:w-2/3 py-2 md:px-4 font-sans md:border-l border-gray-500 bg-gray-100">
@@ -33,6 +33,15 @@
                 </div>
                 <div class="text-center font-bold" v-else>
                     Start by delimiting an area on the map
+                </div>
+            </div>
+            <div class="shadow-md md:rounded-md px-4 py-3 bg-red-50 shadow-red-100 md:mt-4  mb-4 md:mb-1 text-sm text-red-600">
+                ⚠️ It's easy to overestimate the density as the crowd is rarely uniformly packed. This is what <strong>2 people per square meter</strong> looks like from a low angle :
+                <div class="flex space-x-2 mt-1">
+                    <a class="font-semibold underline hover:no-underline" target="blank" href="https://www.gkstill.com/_Media/3-4_med_hr.png">Image 1</a>
+                    <a class="font-semibold underline hover:no-underline" target="blank" href="https://www.gkstill.com/_Media/4-4_med_hr.png">Image 2</a>
+                    <a class="font-semibold underline hover:no-underline" target="blank" href="https://www.gkstill.com/_Media/2-2_med_hr.png">Image 3</a>
+                    <span>(<a class="underline hover:no-underline" href="https://www.gkstill.com/Support/crowd-density/CrowdDensity-1.html">source</a>)</span>
                 </div>
             </div>
             <div class="shadow-md md:rounded-md px-4 py-3 bg-white md:mt-4 mb-4 md:mb-8">
