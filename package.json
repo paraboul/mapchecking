@@ -7,10 +7,10 @@
   },
   "dependencies": {
     "@googlemaps/js-api-loader": "^1.4.0",
-    "@vitejs/plugin-vue": "^1.2.4",
-    "between": "git+https://github.com/paraboul/between.git",
+    "@vitejs/plugin-vue": "^2.2.4",
     "js-base64": "^3.5.2",
-    "tailwindcss": "^2.2.4",
+    "tailwindcss": "^3.0.23",
+    "tatween": "^0.2.0",
     "vue": "^3.0.0-rc.1"
   },
   "devDependencies": {

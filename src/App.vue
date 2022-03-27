@@ -55,7 +55,7 @@
 
 <script>
 import Map from './components/Map.vue'
-import Between from 'between'
+import { tatween, Easing } from 'tatween';
 
 export default {
     name: 'App',
@@ -81,9 +81,9 @@ export default {
         },
 
         setDensity(val) {
-            Between.block(800, Between.easing.Exponential.Out, (obj) => {
+            tatween(800, Easing.Exponential.Out, (obj) => {
                 obj.density = val;
-            }, this);
+            }, this)
         }
     },
 

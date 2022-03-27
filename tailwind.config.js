@@ -6,14 +6,11 @@ module.exports = {
 //    removeDeprecatedGapUtilities: true,
 //    purgeLayersByDefault: true,
   },
-  purge: {
-    enabled: true,
-    layers: ['utilities'],
-    content: [
-      "./src/**/*.vue",
-      "./index.html"
-    ]
-  },
+
+  content: [
+    "./src/**/*.vue",
+    "./index.html"
+  ],
   theme: {
     extend: {
       colors: {
