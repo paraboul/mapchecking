@@ -38,7 +38,7 @@
             <div class="shadow-md md:rounded-md px-4 py-3 bg-white md:mt-4 mb-4 md:mb-8">
                 <h2 class="font-bold mb-2">Examples</h2>
 
-                <a href="javascript:void(0)" @click="$refs.map.reloadHash('bMzMjQJtzQ0LZXRJAAACQQVdzQ0K-UxJAlHNDQl5REkDTc0NCz1ESQP9zQ0KFUxJAHnRDQv5WEkA8dENC51oSQEF0Q0LRXhJAPnRDQldjEkA2dENCo2YSQA50Q0KPaxJA_HNDQq5uEkDac0NCV28SQJRzQ0IhcBJAYnNDQvFuEkAzc0NCEWoSQPNyQ0LIXxJAGnNDQsNZEkA')" class="inline-block btn rounded-md mr-3 mb-2 text-sm">Place du Trocadero - Paris</a>
+                <a href="javascript:void(0)" @click="$refs.map.reloadHash('bAAAgQJtzQ0LZXRJAAACQQVdzQ0K-UxJAlHNDQl5REkDTc0NCz1ESQP9zQ0KFUxJAHnRDQv5WEkA8dENC51oSQEF0Q0LRXhJAPnRDQldjEkA2dENCo2YSQA50Q0KPaxJA_HNDQq5uEkDac0NCV28SQJRzQ0IhcBJAYnNDQvFuEkAzc0NCEWoSQPNyQ0LIXxJAGnNDQsNZEkA')" class="inline-block btn rounded-md mr-3 mb-2 text-sm">Place du Trocadero - Paris</a>
                 <a href="javascript:void(0)" @click="$refs.map.reloadHash('bAAAAQEJ4Q0IdShdAAACQQcp4Q0IfKxdAeXlDQtI7F0CseENClVIXQNl3Q0IeaBdAG3dDQnlYF0A')" class="inline-block btn rounded-md mr-3 mb-2 text-sm">Place de la République</a>
                 <a href="javascript:void(0)" @click="$refs.map.reloadHash('bAAAAQHoRUkLzzlVBAABwQRsPUkISoVVB0A5SQhKhVUF_EFJChAhWQccQUkJBCFZB')" class="inline-block btn rounded-md mr-3 mb-2 text-sm">Tiergatern - Berlin</a>
             </div>
