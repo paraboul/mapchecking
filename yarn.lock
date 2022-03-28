@@ -161,6 +161,27 @@
   resolved "https://registry.yarnpkg.com/@vue/shared/-/shared-3.2.31.tgz#c90de7126d833dcd3a4c7534d534be2fb41faa4e"
   integrity sha512-ymN2pj6zEjiKJZbrf98UM2pfDd6F2H7ksKw7NDt/ZZ1fh5Ei39X5tABugtT03ZRlWd9imccoK0hE8hpjpU7irQ==
 
+"@vueuse/core@^8.2.0":
+  version "8.2.0"
+  resolved "https://registry.yarnpkg.com/@vueuse/core/-/core-8.2.0.tgz#2e9163c0bbe8dcb240fdd89d9c8a52576fce8db7"
+  integrity sha512-89ZfKtFHz5ynfpWyFVXtK0yePJ2MZqFaOxnGeZn7cIp8KFbPRlu6Wsxi3gBkJNpjq+q9qbEh6MjV7QBvqCQ5Og==
+  dependencies:
+    "@vueuse/metadata" "8.2.0"
+    "@vueuse/shared" "8.2.0"
+    vue-demi "*"
+
+"@vueuse/metadata@8.2.0":
+  version "8.2.0"
+  resolved "https://registry.yarnpkg.com/@vueuse/metadata/-/metadata-8.2.0.tgz#f62a02e840220768941b3683dd8171c39581b950"
+  integrity sha512-cbaezEccNuxQC+OiudG9VjZNg9/RbAAHkyuhC6+8Gsgsc+MvDhfn1NrV6NNTaldLlZgJFgUiYOkrf3JGTTTGXQ==
+
+"@vueuse/shared@8.2.0":
+  version "8.2.0"
+  resolved "https://registry.yarnpkg.com/@vueuse/shared/-/shared-8.2.0.tgz#a8e2b637cfd866ea985615df9ec4913c4355c084"
+  integrity sha512-dTw7EJZgZCgG9DoVAiz4LtmKnIFXuE/idUFzvqRAJLjbPiVJc+qQH5kDUdKHI3W1U9t//1mdasQEKONArburiQ==
+  dependencies:
+    vue-demi "*"
+
 acorn-node@^1.6.1:
   version "1.8.2"
   resolved "https://registry.yarnpkg.com/acorn-node/-/acorn-node-1.8.2.tgz#114c95d64539e53dede23de8b9d96df7c7ae2af8"
@@ -1102,6 +1123,11 @@ vite@^2.4.0:
     rollup "^2.59.0"
   optionalDependencies:
     fsevents "~2.3.2"
+
+vue-demi@*:
+  version "0.12.4"
+  resolved "https://registry.yarnpkg.com/vue-demi/-/vue-demi-0.12.4.tgz#420dd17628f95f1bbce1102ad3c51074713a8049"
+  integrity sha512-ztPDkFt0TSUdoq1ZI6oD730vgztBkiByhUW7L1cOTebiSBqSYfSQgnhYakYigBkyAybqCTH7h44yZuDJf2xILQ==
 
 vue@^3.0.0-rc.1:
   version "3.2.31"

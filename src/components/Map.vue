@@ -5,12 +5,14 @@
     </div>
 </template>
 
-
-
 <script setup lang="ts">
     import { Loader as MapLoader } from '@googlemaps/js-api-loader';
     import { Base64 } from 'js-base64'
     import { onMounted, ref, watch, computed } from 'vue';
+    import { watchDebounced } from '@vueuse/core'
+
+
+    const DEFAULT_MAP_POSITION = [48.862895, 2.286978, 18]
 
     const loader = new MapLoader({
         apiKey: "AIzaSyD7Vm3gm4Fm7jSkuIh_yM14GmYhz1P_S4M",
@@ -29,7 +31,7 @@
         (event: "hashChange", val: string): void
     }>()
 
-    const mapPosition = ref([48.862895, 2.286978, 18])
+    const mapPosition = ref(DEFAULT_MAP_POSITION)
     const arrPoly = ref<google.maps.LatLng[]>([])
     const mapLoaded = ref(false);
     const pacinput = ref()
@@ -86,7 +88,6 @@
                 disableDoubleClickZoom: true,
                 streetViewControl: false
             });
-
 
             const poly = new google.maps.Polygon({
                 strokeOpacity: 0.8,
@@ -176,7 +177,7 @@
         currentMap.setCenter({lat: meta[1], lng: meta[2]});
         currentMap.setZoom(meta[3]);
 
-        let path = [];
+        const path = [];
         for (let i = 0; i < data.length; i += 2) {
             path.push({
                 lat: data[i],
@@ -193,22 +194,20 @@
     }
 
     const loadLegacyHash = (hash: string) => {
-        let opt = hash.split(';');
-
-        let curPosition = opt.pop();
+        const opt = hash.split(';');
+        const curPosition = opt.pop();
 
         if (curPosition) {
-            let cursetting = curPosition.split(',');
+            const cursetting = curPosition.split(',');
             currentMap.setCenter({lat: parseFloat(cursetting[0]), lng: parseFloat(cursetting[1])});
             currentMap.setZoom(parseInt(cursetting[2]));
         }
 
-        let density = parseFloat(opt.pop()) || 1;
-
-        let path = [];
+        const density = parseFloat(opt.pop()) || 1;
+        const path = [];
 
         for (let i = 0; i < opt.length; i++) {
-            let coord = opt[i].split(',');
+            const coord = opt[i].split(',');
             path.push({
                 lat: parseFloat(coord[0]),
                 lng: parseFloat(coord[1])
@@ -227,11 +226,8 @@
         currentPolygon.getPath().clear();
     }
 
-
-    watch(() => props.density, () => updatePolygonColor());
-
     const hash = computed(() => {
-        let buf = new Float32Array(arrPoly.value.length*2+4);
+        const buf = new Float32Array(arrPoly.value.length*2+4);
         buf[0] = props.density;
         buf.set(mapPosition.value, 1);
 
@@ -242,15 +238,11 @@
         return 'b' + Base64.fromUint8Array(new Uint8Array(buf.buffer), true);
     })
 
-    watch(hash, (hashval: string) => {
-        if ($updateHashTimer) {
-            clearTimeout($updateHashTimer);
-        }
+    watch(() => props.density, () => updatePolygonColor());
 
-        $updateHashTimer = setTimeout(() => {
-            emits('hashChange', hashval);
-        }, 300);
-    })
+    watchDebounced(hash,
+        (hashval: string) => emits('hashChange', hashval),
+        { debounce: 300 })
 
     defineExpose({
         reset,
