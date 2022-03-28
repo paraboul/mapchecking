@@ -1,7 +1,7 @@
 <template>
     <div class="md:flex flex-1 md:items-stretch md:flex-row">
         <div class="h-[60%] md:h-full w-full">
-            <Map :density="density" :startHash="startHash" ref="map" @densityChange="densityUpdate" @hashChange="hashUpdate" @surfaceUpdate="surfaceUpdate" />
+            <Map :density="density" :startHash="startHash" ref="mapComponent" @densityChange="densityUpdate" @hashChange="hashUpdate" @surfaceUpdate="surfaceUpdate" />
         </div>
         <div class="flex flex-col relative w-full lg:w-2/3 py-2 md:px-4 font-sans md:border-l border-gray-500 bg-slate-100">
             <div class="order-last md:order-first px-4 mb-4 md:mb-0 md:px-0">
@@ -13,9 +13,9 @@
 
             <div class="shadow-md md:rounded-md px-4 py-3 bg-white md:mt-4 mb-4 md:mb-1">
                 <div v-if="surface !== 0" class="relative">
-                    <span class="text-sm text-gray-700">Surface area <span class="font-semibold">{{ formatArea(surface) }}sqm</span> &bull; <span class="font-semibold">{{ formatArea(surface_feet) }}sqft</span></span>
+                    <span class="text-sm text-gray-700">Surface area <span class="font-semibold">{{ surface.toFixed(0) }}sqm</span> &bull; <span class="font-semibold">{{ surface_feet.toFixed(0) }}sqft</span></span>
 
-                    <button @click="$refs.map.reset()" class="rounded absolute right-0 px-2 py-1 text-xs inline-block bg-red-400 shadow-md text-white font-bold hover:shadow-none focus:outline-none">Reset the area</button>
+                    <button @click="mapComponent.reset()" class="rounded absolute right-0 px-2 py-1 text-xs inline-block bg-red-400 shadow-md text-white font-bold hover:shadow-none focus:outline-none">Reset the area</button>
                     <div class="mt-2 space-y-2">
                         <span class="font-semibold">Crowd density <span class="text-xs text-gray-700"><a class="underline hover:no-underline" target="_blank" href="http://www.gkstill.com/Support/crowd-density/625sm/Density6.html">What does it look like?</a></span></span>
                         <input class="block w-full" type="range" min="0.1" max="5.0" step="0.05"  v-model.number="density" />
@@ -47,9 +47,9 @@
             <div class="shadow-md md:rounded-md px-4 py-3 bg-white md:mt-4 mb-4 md:mb-8">
                 <h2 class="font-bold mb-2">Examples</h2>
 
-                <a href="javascript:void(0)" @click="$refs.map.reloadHash('bAAAgQJtzQ0LZXRJAAACQQVdzQ0K-UxJAlHNDQl5REkDTc0NCz1ESQP9zQ0KFUxJAHnRDQv5WEkA8dENC51oSQEF0Q0LRXhJAPnRDQldjEkA2dENCo2YSQA50Q0KPaxJA_HNDQq5uEkDac0NCV28SQJRzQ0IhcBJAYnNDQvFuEkAzc0NCEWoSQPNyQ0LIXxJAGnNDQsNZEkA')" class="inline-block btn rounded-md mr-3 mb-2 text-sm">Place du Trocadero - Paris</a>
-                <a href="javascript:void(0)" @click="$refs.map.reloadHash('bAAAAQEJ4Q0IdShdAAACQQcp4Q0IfKxdAeXlDQtI7F0CseENClVIXQNl3Q0IeaBdAG3dDQnlYF0A')" class="inline-block btn rounded-md mr-3 mb-2 text-sm">Place de la République</a>
-                <a href="javascript:void(0)" @click="$refs.map.reloadHash('bAAAAQHoRUkLzzlVBAABwQRsPUkISoVVB0A5SQhKhVUF_EFJChAhWQccQUkJBCFZB')" class="inline-block btn rounded-md mr-3 mb-2 text-sm">Tiergatern - Berlin</a>
+                <a href="javascript:void(0)" @click="mapComponent.reloadHash('bAAAgQJtzQ0LZXRJAAACQQVdzQ0K-UxJAlHNDQl5REkDTc0NCz1ESQP9zQ0KFUxJAHnRDQv5WEkA8dENC51oSQEF0Q0LRXhJAPnRDQldjEkA2dENCo2YSQA50Q0KPaxJA_HNDQq5uEkDac0NCV28SQJRzQ0IhcBJAYnNDQvFuEkAzc0NCEWoSQPNyQ0LIXxJAGnNDQsNZEkA')" class="inline-block btn rounded-md mr-3 mb-2 text-sm">Place du Trocadero - Paris</a>
+                <a href="javascript:void(0)" @click="mapComponent.reloadHash('bAAAAQEJ4Q0IdShdAAACQQcp4Q0IfKxdAeXlDQtI7F0CseENClVIXQNl3Q0IeaBdAG3dDQnlYF0A')" class="inline-block btn rounded-md mr-3 mb-2 text-sm">Place de la République</a>
+                <a href="javascript:void(0)" @click="mapComponent.reloadHash('bAAAAQHoRUkLzzlVBAABwQRsPUkISoVVB0A5SQhKhVUF_EFJChAhWQccQUkJBCFZB')" class="inline-block btn rounded-md mr-3 mb-2 text-sm">Tiergatern - Berlin</a>
             </div>
             <div class="grow"></div>
             <div class="flex space-x-4 order-last bg-white p-4 text-xs tracking-tight md:-mx-4 items-center font-medium justify-center">
@@ -61,57 +61,37 @@
     </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import Map from './components/Map.vue'
 import { tatween, Easing } from 'tatween';
+import { computed, ref } from '@vue/reactivity';
 
-export default {
-    name: 'App',
-    components: {
-        Map
-    },
-
-    methods: {
-        surfaceUpdate(data) {
-            this.surface = data;
-        },
-
-        hashUpdate(hash) {
-            window.location.hash = hash;
-        },
-
-        densityUpdate(val) {
-            this.density = Math.round(val * 100) / 100;
-        },
-
-        formatArea(val) {
-            return Number.parseFloat(val).toFixed(0);
-        },
-
-        setDensity(val) {
-            tatween(800, Easing.Exponential.Out, (obj) => {
-                obj.density = val;
-            }, this)
-        }
-    },
-
-    data() {
-        return {
-            surface: 0,
-            density: 1.5,
-            startHash: window.location.hash && window.location.hash.length > 3 ?
+const surface = ref(0);
+const density = ref(1.5);
+const startHash = window.location.hash && window.location.hash.length > 3 ?
                 window.location.hash.substring(1) : ''
-        }
-    },
 
-    computed: {
-        surface_feet() {
-            return (this.surface * 10.764).toFixed(2);
-        },
+const mapComponent = ref();
 
-        estimated() {
-            return parseInt(this.surface * this.density);
-        }
-    }
+const surfaceUpdate = (data: number) => {
+    surface.value = data;
 }
+
+const hashUpdate = (hash: string) => {
+    window.location.hash = hash;
+}
+
+const densityUpdate = (val: number) => {
+    density.value = val;
+}
+
+const setDensity = (val: number) => {
+    tatween(800, Easing.Exponential.Out, (obj) => {
+        density.value = val;
+    }, density)
+}
+
+const surface_feet = computed(() => (surface.value * 10.764))
+const estimated = computed(() => Math.round(surface.value * density.value))
+
 </script>
