@@ -87,7 +87,7 @@ const densityUpdate = (val: number) => {
 
 const setDensity = (val: number) => {
     tatween(800, Easing.Exponential.Out, (obj) => {
-        density.value = val;
+        obj.value = val;
     }, density)
 }
 
