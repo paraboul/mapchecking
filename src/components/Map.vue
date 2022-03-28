@@ -38,7 +38,6 @@
 
     let currentMap : google.maps.Map | undefined;
     let currentPolygon : google.maps.Polygon | undefined;
-    let $updateHashTimer = null;
 
     onMounted(() => {
         loader.loadCallback(e => {
@@ -108,8 +107,7 @@
 
             ["insert_at", "remove_at", "set_at"].forEach(ev => google.maps.event.addListener(poly.getPath(), ev, surfaceUpdated));
             updatePolygonColor();
-
-            $updateHashTimer = null;
+            
             mapLoaded.value = true;
         });
     })
