@@ -116,8 +116,17 @@
         });
     })
 
+    /*
+        Get the polygon color from the density value.
+        This is a simple linear interpolation between
+        green and red on the Hue space.
+    */
     const getHue = (val: number) => {
         const min = 0.1;
+        /*
+            Clamp "max density" because any value
+            above 3.0 should be considered "red"
+        */
         const max = 3.0;
 
         // inv lerp from the density
@@ -149,6 +158,10 @@
         mapPosition.value = [pos.lat(), pos.lng(), zoom]; 
     }
 
+    /*
+        Add a new point to our polygon
+        using the lat/lng position clicked on the map.
+    */
     const mapClicked = (ev: any) => {
         currentPolygon.getPath().push(ev.latLng);
     }
@@ -156,6 +169,10 @@
     const surfaceUpdated = () => {
         arrPoly.value = currentPolygon.getPath().getArray().slice();
 
+        /*
+            Compute the surface area of our polygon.
+            google.maps.geometry.spherical.computeArea() returns the area in square meters
+        */
         emits('surfaceUpdate', google.maps.geometry.spherical.computeArea(currentPolygon.getPath()));
     }
 
@@ -167,6 +184,9 @@
         updatePolygonColor();
     }
 
+    /*
+        Deserialize out URL hash
+    */
     const loadHash = (hash: string) => {
         if (hash[0] != 'b' && hash[0] != 'c') {
             return loadLegacyHash(hash);
@@ -183,7 +203,9 @@
             buf = unzlibSync(buf)
         }
 
+        /* Extract meta data (density, position & zoom) */
         const meta = new Float32Array(buf.buffer, 0, 4);
+        /* Extract polygon path */
         const data = new Float32Array(buf.buffer, 4*4);
 
         currentMap.setCenter({lat: meta[1], lng: meta[2]});
@@ -205,6 +227,11 @@
         emits('densityChange', meta[0]);
     }
 
+    /*
+        This is the legacy hash decoder.
+        We keep it around so that original
+        links posted online keep working
+    */
     const loadLegacyHash = (hash: string) => {
         const opt = hash.split(';');
         const curPosition = opt.pop();
@@ -238,6 +265,21 @@
         currentPolygon.getPath().clear();
     }
 
+    /*
+        Generate URL hash from various data.
+
+        - density
+        - Map position (center position as lat/lng & zoom value)
+        - Our polygon path as lat/lng points
+
+        The generated buffer is then compressed (if needed) and Base64'd.
+
+        We consider every value to be a float and serialize
+        our data into a binary array with no extra information.
+
+            0          4            8          12           16         ....
+        [density][position lat][position long][zoom][...polygon points]
+    */
     const hash = computed(() => {
         const buf = new Float32Array(arrPoly.value.length*2+4);
         buf[0] = props.density;
@@ -255,11 +297,19 @@
             outbuf = zlibSync(outbuf, { level: 9 });
         }
 
+        /*
+
+        */
         return (isCompressed ? 'c' : 'b') + Base64.fromUint8Array(outbuf, true);
     })
 
     watch(() => props.density, () => updatePolygonColor());
 
+    /*
+        Debounce the URL hash update
+        otherwise it would flood the browser history whenever the user
+        moves the polygon around
+    */
     watchDebounced(hash,
         (hashval: string) => emits('hashChange', hashval),
         { debounce: 300 })
