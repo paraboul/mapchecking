@@ -1,6 +1,6 @@
 <template>
     <div class="w-full h-full">
-        <input ref="pacinput" class="controls" :class="[mapLoaded ? '' : 'hidden']" type="text" placeholder="Search Box">
+        <input ref="pacinput" id="pac-input" class="controls" :class="[mapLoaded ? '' : 'hidden']" type="text" placeholder="Search Box">
         <div class="w-full h-full" ref="mapel"></div>
     </div>
 </template>
@@ -111,7 +111,6 @@
 
             ["insert_at", "remove_at", "set_at"].forEach(ev => google.maps.event.addListener(poly.getPath(), ev, surfaceUpdated));
             updatePolygonColor();
-            
             mapLoaded.value = true;
         });
     })
