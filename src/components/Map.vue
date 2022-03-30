@@ -1,7 +1,7 @@
 <template>
     <div class="w-full h-full">
         <input ref="pacinput" class="controls" :class="[mapLoaded ? '' : 'hidden']" type="text" placeholder="Search Box">
-        <div class="w-full h-full" id="map"></div>
+        <div class="w-full h-full" ref="mapel"></div>
     </div>
 </template>
 
@@ -10,7 +10,6 @@
     import { Base64 } from 'js-base64'
     import { onMounted, ref, watch, computed } from 'vue';
     import { watchDebounced } from '@vueuse/core'
-
 
     const DEFAULT_MAP_POSITION = [48.862895, 2.286978, 18]
 
@@ -35,9 +34,10 @@
     const arrPoly = ref<google.maps.LatLng[]>([])
     const mapLoaded = ref(false);
     const pacinput = ref()
+    const mapel = ref()
 
-    let currentMap : google.maps.Map | undefined;
-    let currentPolygon : google.maps.Polygon | undefined;
+    let currentMap : google.maps.Map;
+    let currentPolygon : google.maps.Polygon;
 
     onMounted(() => {
         loader.loadCallback(e => {
@@ -46,7 +46,7 @@
                 return;
             }
 
-            currentMap = new google.maps.Map(document.getElementById("map"), {
+            currentMap = new google.maps.Map(mapel.value, {
                 zoom: mapPosition.value[2],
                 center: {
                     lat: mapPosition.value[0],
@@ -62,20 +62,23 @@
             searchBox.addListener('places_changed', () => {
                 const places = searchBox.getPlaces();
 
-                if (places.length == 0) {
+                if (!places || places.length == 0) {
                     return;
                 }
 
                 const place = places[0];
 
-                currentMap.setCenter(place.geometry.location);
+                if (place.geometry?.location) {
+                    currentMap.setCenter(place.geometry.location);
+                }
+
                 currentMap.setZoom(17);
 
                 reset();
             });
 
             currentMap.addListener('bounds_changed', function() {
-                searchBox.setBounds(currentMap.getBounds());
+                searchBox.setBounds(currentMap.getBounds()!);
             });
             currentMap.addListener('center_changed', mapUpdated);
             currentMap.addListener('zoom_changed', mapUpdated);
@@ -138,6 +141,10 @@
         const pos = currentMap.getCenter();
         const zoom = currentMap.getZoom();
 
+        if (!pos || !zoom) {
+            return;
+        }
+
         mapPosition.value = [pos.lat(), pos.lng(), zoom]; 
     }
 
@@ -175,7 +182,7 @@
         currentMap.setCenter({lat: meta[1], lng: meta[2]});
         currentMap.setZoom(meta[3]);
 
-        const path = [];
+        const path : google.maps.LatLngLiteral[] = [];
         for (let i = 0; i < data.length; i += 2) {
             path.push({
                 lat: data[i],
@@ -201,8 +208,8 @@
             currentMap.setZoom(parseInt(cursetting[2]));
         }
 
-        const density = parseFloat(opt.pop()) || 1;
-        const path = [];
+        const density = parseFloat(opt.pop() ?? '') || 1;
+        const path : google.maps.LatLngLiteral[] = [];
 
         for (let i = 0; i < opt.length; i++) {
             const coord = opt[i].split(',');
