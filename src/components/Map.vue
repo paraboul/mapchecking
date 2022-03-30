@@ -10,6 +10,7 @@
     import { Base64 } from 'js-base64'
     import { onMounted, ref, watch, computed } from 'vue';
     import { watchDebounced } from '@vueuse/core'
+    import { zlibSync, unzlibSync } from 'fflate';
 
     const DEFAULT_MAP_POSITION = [48.862895, 2.286978, 18]
 
@@ -167,13 +168,19 @@
     }
 
     const loadHash = (hash: string) => {
-        if (hash[0] != 'b') {
+        if (hash[0] != 'b' && hash[0] != 'c') {
             return loadLegacyHash(hash);
         }
 
-        const buf = Base64.toUint8Array(hash.substr(1));
+        const isCompressed = hash[0] == 'c';
+        let buf = Base64.toUint8Array(hash.substr(1));
+
         if (!buf) {
             return;
+        }
+
+        if (isCompressed) {
+            buf = unzlibSync(buf)
         }
 
         const meta = new Float32Array(buf.buffer, 0, 4);
@@ -240,7 +247,15 @@
             buf[4+i*2] = arrPoly.value[i].lat();
             buf[4+i*2+1] = arrPoly.value[i].lng();
         }
-        return 'b' + Base64.fromUint8Array(new Uint8Array(buf.buffer), true);
+
+        let outbuf = new Uint8Array(buf.buffer);
+        const isCompressed = outbuf.byteLength >= 150;
+
+        if (isCompressed) {
+            outbuf = zlibSync(outbuf, { level: 9 });
+        }
+
+        return (isCompressed ? 'c' : 'b') + Base64.fromUint8Array(outbuf, true);
     })
 
     watch(() => props.density, () => updatePolygonColor());
