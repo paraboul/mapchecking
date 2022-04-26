@@ -6,15 +6,15 @@
 </template>
 
 <script setup lang="ts">
-    import { Loader as MapLoader } from '@googlemaps/js-api-loader';
+    import { Loader } from '@googlemaps/js-api-loader';
     import { Base64 } from 'js-base64'
     import { onMounted, ref, watch, computed } from 'vue';
     import { watchDebounced } from '@vueuse/core'
     import { zlibSync, unzlibSync } from 'fflate';
 
     const DEFAULT_MAP_POSITION = [48.862895, 2.286978, 18]
-
-    const loader = new MapLoader({
+    
+    const loader = new Loader({
         apiKey: "AIzaSyD7Vm3gm4Fm7jSkuIh_yM14GmYhz1P_S4M",
         version: "3.48",
         libraries: ["geometry", "places"]
@@ -57,17 +57,14 @@
                 gestureHandling: 'greedy'
             });
 
-            const searchBox = new google.maps.places.SearchBox(pacinput.value);
+            const searchBox = new google.maps.places.Autocomplete(pacinput.value, {
+                fields: ['geometry']
+            })
+            // const searchBox = new google.maps.places.SearchBox(pacinput.value);
             currentMap.controls[google.maps.ControlPosition.LEFT_TOP].push(pacinput.value);
 
-            searchBox.addListener('places_changed', () => {
-                const places = searchBox.getPlaces();
-
-                if (!places || places.length == 0) {
-                    return;
-                }
-
-                const place = places[0];
+            searchBox.addListener('place_changed', () => {
+                const place = searchBox.getPlace();
 
                 if (place.geometry?.location) {
                     currentMap.setCenter(place.geometry.location);
