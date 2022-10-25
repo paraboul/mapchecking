@@ -6,11 +6,13 @@
 </template>
 
 <script setup lang="ts">
-    import { Loader } from '@googlemaps/js-api-loader';
     import { Base64 } from 'js-base64'
     import { onMounted, ref, watch, computed } from 'vue';
     import { watchDebounced } from '@vueuse/core'
     import { zlibSync, unzlibSync } from 'fflate';
+
+    import * as GMaps from '@googlemaps/js-api-loader'
+    const { Loader } = GMaps
 
     const DEFAULT_MAP_POSITION = [48.862895, 2.286978, 18]
     

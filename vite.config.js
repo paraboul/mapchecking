@@ -13,6 +13,10 @@ export default defineConfig({
         },
     },
 
+    optimizeDeps: {
+        entries: ['@googlemaps/js-api-loader']
+    },
+
     server: {
         https: false,
     }

@@ -1,7 +1,9 @@
 <template>
     <div class="md:flex flex-1 md:items-stretch md:flex-row">
         <div class="h-[60%] md:h-full w-full">
-            <Map :density="density" :startHash="startHash" ref="mapComponent" @densityChange="densityUpdate" @hashChange="hashUpdate" @surfaceUpdate="surfaceUpdate" />
+            <client-only>
+                <Map :density="density" :startHash="startHash" ref="mapComponent" @densityChange="densityUpdate" @hashChange="hashUpdate" @surfaceUpdate="surfaceUpdate" />
+            </client-only>
         </div>
         <div class="flex flex-col relative w-full lg:w-2/3 py-2 md:px-4 font-sans md:border-l border-gray-500 bg-slate-100">
             <div class="order-last md:order-first px-4 mb-4 md:mb-0 md:px-0">
@@ -68,7 +70,7 @@ import { computed, ref } from '@vue/reactivity';
 
 const surface = ref(0);
 const density = ref(1.5);
-const startHash = window.location.hash && window.location.hash.length > 3 ?
+const startHash = !import.meta.env.SSR && window.location.hash && window.location.hash.length > 3 ?
                 window.location.hash.substring(1) : ''
 
 const mapComponent = ref();
