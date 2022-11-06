@@ -7,7 +7,7 @@
         </div>
         <div class="flex flex-col relative w-full lg:w-2/3 py-2 md:px-4 font-sans md:border-l border-gray-500 bg-slate-100">
             <div class="order-last md:order-first px-4 mb-4 md:mb-0 md:px-0">
-                <h1 class="text-xl md:text-2xl">MapChecking &bull; Crowd size estimation</h1>
+                <h1 class="text-xl md:text-2xl">MapChecking &bull; Crowd counting tool</h1>
                 <span class="text-gray-800 leading-tight">This tool helps you estimate and fact-check the maximum number of people standing in a given area.</span> 
                 <br />
                 <div class="text-sm mt-1 font-semibold">Source on github : <iframe class="inline" src="https://ghbtns.com/github-btn.html?user=paraboul&repo=mapchecking&type=star&count=false" frameborder="0" scrolling="0" width="150" height="20" title="GitHub"></iframe></div>
