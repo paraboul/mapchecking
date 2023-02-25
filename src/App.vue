@@ -55,7 +55,7 @@
             </div>
             <div class="grow"></div>
             <div class="flex space-x-4 order-last bg-white p-4 text-xs tracking-tight md:-mx-4 items-center font-medium justify-center">
-                <span>Created by Anthony Catel // <a href="https://instagram.com/minipouce_fr">Instagram</a> //</span>
+                <span>Created by Anthony Catel // <a href="https://instagram.com/antcatel">Instagram</a> //</span>
                 <a href="https://twitter.com/antcatel?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">Follow @antcatel</a>
             </div>
 <!--             <div class="bottom-0 left-0 md:absolute h-8 bg-white border-t border-gray-300 w-full text-xs tracking-tight text-center py-2">Created by Anthony Catel</div> -->
