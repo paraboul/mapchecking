@@ -124,6 +124,7 @@ how to remove the virtical space around the range input in IE*/
   padding: 0 11px 0 13px;
   text-overflow: ellipsis;
   width: 300px;
+  border-radius: 8px;
 }
 
 @tailwind utilities;
