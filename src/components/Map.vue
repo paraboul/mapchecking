@@ -1,6 +1,6 @@
 <template>
     <div class="w-full h-full">
-        <input ref="pacinput" id="pac-input" class="controls" :class="[mapLoaded ? '' : 'hidden']" type="text" placeholder="Search Box">
+        <input ref="pacinput" id="pac-input" class="controls" :class="[mapLoaded ? '' : 'hidden']" type="text" placeholder="Search a place">
         <div class="w-full h-full" ref="mapel"></div>
     </div>
 </template>
@@ -62,14 +62,34 @@
             const searchBox = new google.maps.places.Autocomplete(pacinput.value, {
                 fields: ['geometry']
             })
-            // const searchBox = new google.maps.places.SearchBox(pacinput.value);
+            const service = new google.maps.places.AutocompleteService();
+            const placesService = new google.maps.places.PlacesService(currentMap)
+
             currentMap.controls[google.maps.ControlPosition.LEFT_TOP].push(pacinput.value);
 
-            searchBox.addListener('place_changed', () => {
+            searchBox.addListener('place_changed', async () => {
                 const place = searchBox.getPlace();
 
                 if (place.geometry?.location) {
                     currentMap.setCenter(place.geometry.location);
+                } else {
+                    const sessionToken = new google.maps.places.AutocompleteSessionToken();
+                    const rest = await service.getPlacePredictions({
+                        input: place.name!,
+                        sessionToken
+                    })
+
+                    placesService.getDetails({
+                        sessionToken,
+                        placeId: rest.predictions[0].place_id
+                    }, (res) => {
+                        if (!res?.geometry?.location) {
+                            return;
+                        }
+
+                        currentMap.setCenter(res.geometry.location);
+                    })
+                    
                 }
 
                 currentMap.setZoom(17);
