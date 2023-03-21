@@ -18,7 +18,7 @@
     
     const loader = new Loader({
         apiKey: "AIzaSyD7Vm3gm4Fm7jSkuIh_yM14GmYhz1P_S4M",
-        version: "3.48",
+        version: "3.51",
         libraries: ["geometry", "places"]
     });
 
