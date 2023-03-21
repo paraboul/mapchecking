@@ -6,23 +6,23 @@
     "build": "vite-ssg build"
   },
   "dependencies": {
-    "@types/google.maps": "^3.50.4",
-    "@vitejs/plugin-vue": "^3.1.2",
-    "@vueuse/core": "^9.3.1",
+    "@types/google.maps": "^3.52.3",
+    "@vitejs/plugin-vue": "^4.1.0",
+    "@vueuse/core": "^9.13.0",
     "fflate": "^0.7.4",
-    "js-base64": "^3.5.2",
-    "tailwindcss": "^3.2.1",
+    "js-base64": "^3.7.5",
+    "tailwindcss": "^3.2.7",
     "tatween": "^0.2.0",
-    "vue": "^3.2.41"
+    "vue": "^3.2.47"
   },
   "devDependencies": {
-    "@googlemaps/js-api-loader": "^1.14.0",
-    "@vue/compiler-sfc": "^3.2.41",
-    "@vueuse/head": "^0.9.8",
-    "autoprefixer": "^10.4.12",
-    "postcss": "^8.4.18",
-    "postcss-cli": "^10.0.0",
-    "vite": "^3.1.8",
-    "vite-ssg": "^0.21.1"
+    "@googlemaps/js-api-loader": "^1.15.1",
+    "@vue/compiler-sfc": "^3.2.47",
+    "@vueuse/head": "^1.1.23",
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.21",
+    "postcss-cli": "^10.1.0",
+    "vite": "^4.2.1",
+    "vite-ssg": "^0.22.1"
   }
 }
