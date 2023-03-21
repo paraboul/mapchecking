@@ -72,6 +72,8 @@
 
                 if (place.geometry?.location) {
                     currentMap.setCenter(place.geometry.location);
+                    currentMap.setZoom(17);
+                    reset();
                 } else {
                     const sessionToken = new google.maps.places.AutocompleteSessionToken();
                     const rest = await service.getPlacePredictions({
@@ -88,13 +90,11 @@
                         }
 
                         currentMap.setCenter(res.geometry.location);
+                        currentMap.setZoom(17);
+                        reset();
                     })
-                    
                 }
 
-                currentMap.setZoom(17);
-
-                reset();
             });
 
             currentMap.addListener('bounds_changed', function() {
