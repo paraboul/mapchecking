@@ -85,7 +85,8 @@
 
                     placesService.getDetails({
                         sessionToken,
-                        placeId: rest.predictions[0].place_id
+                        placeId: rest.predictions[0].place_id,
+                        fields: ['geometry.location']
                     }, (res) => {
                         if (!res?.geometry?.location) {
                             return;
