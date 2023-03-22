@@ -106,7 +106,7 @@ how to remove the virtical space around the range input in IE*/
 
 .controls {
   outline: none;
-  @apply shadow-md rounded-md h-10 mt-4 border
+  @apply shadow-md rounded-md h-10 mt-1 border
 }
 
 #pac-input {
