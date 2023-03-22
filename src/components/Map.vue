@@ -75,6 +75,8 @@
                     currentMap.setZoom(17);
                     reset();
                 } else {
+                    pacinput.value?.blur()
+
                     const sessionToken = new google.maps.places.AutocompleteSessionToken();
                     const rest = await service.getPlacePredictions({
                         input: place.name!,
@@ -92,6 +94,7 @@
                         currentMap.setCenter(res.geometry.location);
                         currentMap.setZoom(17);
                         reset();
+                        
                     })
                 }
 
