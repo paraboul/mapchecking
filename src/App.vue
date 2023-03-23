@@ -52,7 +52,7 @@
                 <div class="flex gap-2 flex-wrap">
                     <a href="javascript:void(0)" @click="mapComponent.reloadHash('bAAAgQJtzQ0LZXRJAAACQQVdzQ0K-UxJAlHNDQl5REkDTc0NCz1ESQP9zQ0KFUxJAHnRDQv5WEkA8dENC51oSQEF0Q0LRXhJAPnRDQldjEkA2dENCo2YSQA50Q0KPaxJA_HNDQq5uEkDac0NCV28SQJRzQ0IhcBJAYnNDQvFuEkAzc0NCEWoSQPNyQ0LIXxJAGnNDQsNZEkA')" class="btn rounded-md text-sm">Place du Trocadero 🇫🇷</a>
                     <a href="javascript:void(0)" @click="mapComponent.reloadHash('bAAAAQEJ4Q0IdShdAAACQQcp4Q0IfKxdAeXlDQtI7F0CseENClVIXQNl3Q0IeaBdAG3dDQnlYF0A')" class="btn rounded-md text-sm">Place de la République 🇫🇷</a>
-                    <a href="javascript:void(0)" @click="mapComponent.reloadHash('ceNolzj3rQQEYBfBb__VvPin5DAYbuce9X8DGIis2kozKJuUtMlBCRF5SFptBWQwko4GRLL4AR6bf09PznI5hbMxMwrYCLdAwKsFo0rYemmMy0gX98r8P-uRrAHrkfQi6pWsCvvUbnoKnb8YS7MmVTMvQAvRKcwb-yarur3HbKozBnQyNwKzM98CSLLV_-0sHPMuceszltgnu5aHyy3sWwZSclMG1dNbAm4xKh3od66ApFw3wA3cwUII')" class="btn rounded-md text-sm">Place de la Bastille 🇫🇷</a>
+                    <a href="javascript:void(0)" @click="mapComponent.reloadHash('ceNolzr-rAXAUBfBvvfW99Z2U2MwGG3HwJ1gssmJjkEWZpfyKKEpIfoSUkqzKYiAZlYxkMRmdMn1u93ZPxxjDTDwYeDdAY0r-SCIYeGiOynAH9MjfHuiWrz7olPcBaJPWMfgvVzPwpAzvAuzKpUzJ7BwMybruLtmcgnZ5mYA_sqz_a0z7EbiRjiGYlrkuWJCFFriTlzZ4lhn1msltHdzLQ-mb-8yDSTkugmtpqYA3GZF_6nesgj45r4Efb-1WKg')" class="btn rounded-md text-sm">Place de la Bastille 🇫🇷</a>
                     <a href="javascript:void(0)" @click="mapComponent.reloadHash('bAAAAQHoRUkLzzlVBAABwQRsPUkISoVVB0A5SQhKhVUF_EFJChAhWQccQUkJBCFZB')" class="btn rounded-md text-sm">Tiergarten 🇩🇪</a>
                 </div>
             </div>
