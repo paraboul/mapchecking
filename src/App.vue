@@ -29,8 +29,8 @@
                         <button @click="setDensity(4)" class="btn">Packed</button>
                     </div>
                     <div class="text-center mt-2">
-                        <span class="block font-semibold text-teal-600">{{ density.toFixed(2) }} people per sqm <small>(~10 sqft)</small></span>
-                        <span class="inline-block mt-2 text-xl font-bold text-gray-800">{{ estimated }} estimated</span>
+                        <span class="block font-semibold text-teal-600 tabular-nums">{{ density.toFixed(2) }} people per sqm <small>(~10 sqft)</small></span>
+                        <span class="inline-block mt-2 text-xl font-bold text-gray-800 tabular-nums">{{ estimated }} estimated</span>
                     </div>
                 </div>
                 <div class="text-center font-bold" v-else>
