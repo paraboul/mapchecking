@@ -19,7 +19,7 @@
     const loader = new Loader({
         apiKey: "AIzaSyD7Vm3gm4Fm7jSkuIh_yM14GmYhz1P_S4M",
         version: "3.51",
-        libraries: ["geometry", "places"]
+        libraries: ["geometry", "places", "visualization"]
     });
 
     const props = defineProps<{
@@ -101,9 +101,9 @@
 
             });
 
-            currentMap.addListener('bounds_changed', function() {
-                searchBox.setBounds(currentMap.getBounds()!);
-            });
+            // currentMap.addListener('bounds_changed', function() {
+            //     searchBox.setBounds(currentMap.getBounds()!);
+            // });
             currentMap.addListener('center_changed', mapUpdated);
             currentMap.addListener('zoom_changed', mapUpdated);
             currentMap.addListener('click', mapClicked);
@@ -112,27 +112,52 @@
                 draggableCursor:'crosshair',
                 clickableIcons: false,
                 disableDoubleClickZoom: true,
-                streetViewControl: false
+                streetViewControl: false,
+                gestureHandling: "none",
+                draggable: false
             });
 
-            const poly = new google.maps.Polygon({
+            currentPolygon = new google.maps.Polygon({
                 strokeOpacity: 0.8,
                 strokeWeight: 2,
-                fillOpacity: 0.35,
+                fillOpacity: 0.0,
                 editable: true,
-                draggable: true,
+                draggable: false,
                 geodesic: true
             });
 
-            poly.setMap(currentMap);
+            const heat = new google.maps.visualization.HeatmapLayer({
+                radius: 0.0001,
+                dissipating: false,
+                maxIntensity: 30
+            })
+            heat.setMap(currentMap);
 
-            currentPolygon = poly;
+            let drawing = false;
+            currentPolygon.setMap(currentMap);
+            currentPolygon.addListener('mousedown', (ev) => {
+                console.log("mouse down")
+                drawing = true;
+            })
+
+            currentPolygon.addListener('mousemove', (ev) => {
+                if (drawing) {
+                    console.log("mouse move", ev.latLng)
+                    heat.getData().push(ev.latLng)
+                }
+            })
+
+            currentPolygon.addListener('mouseup', (ev) => {
+                console.log("mouse up")
+                drawing = false;
+            })
+
 
             if (props.startHash) {
                 loadHash(props.startHash);
             }
 
-            ["insert_at", "remove_at", "set_at"].forEach(ev => google.maps.event.addListener(poly.getPath(), ev, surfaceUpdated));
+            ["insert_at", "remove_at", "set_at"].forEach(ev => google.maps.event.addListener(currentPolygon.getPath(), ev, surfaceUpdated));
             updatePolygonColor();
             mapLoaded.value = true;
         });
