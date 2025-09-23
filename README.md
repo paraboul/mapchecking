@@ -3,7 +3,9 @@
 Estimate and fact-check the maximum number of people that can stand in a given area by drawing polygons on a map and applying reasonable crowd-density assumptions.
 Live site: https://www.mapchecking.com/
 
-The app is frontend only (static), using Vue.JS 3 and vite. SSR is pre-rendered using https://github.com/antfu-collective/vite-ssg
+The app is frontend-only (static), built with **Vue.js 3** and **Vite**.
+Static site generation (SSR) is handled with [vite-ssg](https://github.com/antfu-collective/vite-ssg).
+
 
 ## Features
 
