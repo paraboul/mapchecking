@@ -10,6 +10,7 @@
     import { onMounted, ref, watch, computed } from 'vue';
     import { watchDebounced } from '@vueuse/core'
     import { zlibSync, unzlibSync } from 'fflate';
+    import config from '@/config.json'
 
     import * as GMaps from '@googlemaps/js-api-loader'
     const { Loader } = GMaps
@@ -17,7 +18,7 @@
     const DEFAULT_MAP_POSITION = [48.862895, 2.286978, 18]
     
     const loader = new Loader({
-        apiKey: "AIzaSyD7Vm3gm4Fm7jSkuIh_yM14GmYhz1P_S4M",
+        apiKey: config.google_map.apikey,
         version: "3.51",
         libraries: ["geometry", "places"]
     });
