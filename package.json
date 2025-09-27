@@ -7,9 +7,9 @@
   },
   "dependencies": {
     "@types/google.maps": "^3.52.3",
-    "@vitejs/plugin-vue": "^5.2.1",
-    "@vueuse/core": "^12.7.0",
-    "fflate": "^0.7.4",
+    "@vitejs/plugin-vue": "^6.0.1",
+    "@vueuse/core": "^13.9.0",
+    "fflate": "^0.8.2",
     "js-base64": "^3.7.5",
     "tailwindcss": "^3.2.7",
     "tatween": "^0.2.0",
