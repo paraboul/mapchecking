@@ -11,7 +11,7 @@
       "resolveJsonModule": true,
       "esModuleInterop": true,
       "lib": ["esnext", "dom"],
-      "types": ["vite/client", "unplugin-icons/types/vue"],
+      "types": ["vite/client", "unplugin-icons/types/vue", "google.maps"],
       "baseUrl": ".",
       "paths": {
         "@/*": [
