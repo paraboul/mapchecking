@@ -7,7 +7,7 @@
 
 <script setup lang="ts">
     import { Base64 } from 'js-base64'
-    import { onMounted, ref, watch, computed } from 'vue';
+    import { onMounted, ref, watch, computed, useTemplateRef } from 'vue';
     import { watchDebounced } from '@vueuse/core'
     import { zlibSync, unzlibSync } from 'fflate';
     import config from '@/config.json'
@@ -37,16 +37,22 @@
     const mapPosition = ref(DEFAULT_MAP_POSITION)
     const arrPoly = ref<google.maps.LatLng[]>([])
     const mapLoaded = ref(false);
-    const pacinput = ref()
-    const mapel = ref()
+    const pacinput = useTemplateRef("pacinput");
+    const mapel = useTemplateRef("mapel");
 
     let currentMap : google.maps.Map;
     let currentPolygon : google.maps.Polygon;
 
     onMounted(() => {
+
         loader.loadCallback(e => {
             if (e) {
                 console.log(e);
+                return;
+            }
+            
+            if (!pacinput.value || !mapel.value) {
+                throw new Error("Dom elements not found");
                 return;
             }
 
@@ -313,16 +319,13 @@
             buf[4+i*2+1] = arrPoly.value[i].lng();
         }
 
-        let outbuf = new Uint8Array(buf.buffer);
+        let outbuf = new Uint8Array<ArrayBufferLike>(buf.buffer);
         const isCompressed = outbuf.byteLength >= 150;
 
         if (isCompressed) {
             outbuf = zlibSync(outbuf, { level: 9 });
         }
 
-        /*
-
-        */
         return (isCompressed ? 'c' : 'b') + Base64.fromUint8Array(outbuf, true);
     })
 
