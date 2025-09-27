@@ -30,7 +30,7 @@
                     </div>
                     <div class="text-center mt-2">
                         <span class="block font-semibold text-teal-600 tabular-nums">{{ density.toFixed(2) }} people per sqm <small>(~10 sqft)</small></span>
-                        <span class="inline-block mt-2 text-xl font-bold text-gray-800 tabular-nums">{{ estimated }} estimated</span>
+                        <span class="inline-block mt-2 text-xl font-bold text-gray-800 tabular-nums">{{ numberFormatter.format(estimated) }} estimated</span>
                     </div>
                 </div>
                 <div class="text-center font-bold" v-else>
@@ -95,6 +95,8 @@ const setDensity = (val: number) => {
         obj.value = val;
     }, density)
 }
+
+const numberFormatter = new Intl.NumberFormat();
 
 const surface_feet = computed(() => (surface.value * 10.764))
 const estimated = computed(() => Math.round(surface.value * density.value))
