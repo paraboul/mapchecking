@@ -6,6 +6,7 @@
     "build": "vite-ssg build"
   },
   "dependencies": {
+    "@mapbox/polyline": "^1.2.1",
     "@types/google.maps": "^3.52.3",
     "@vitejs/plugin-vue": "^6.0.1",
     "@vueuse/core": "^13.9.0",

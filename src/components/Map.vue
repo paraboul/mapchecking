@@ -9,8 +9,10 @@
     import { Base64 } from 'js-base64'
     import { onMounted, ref, watch, computed, useTemplateRef } from 'vue';
     import { watchDebounced } from '@vueuse/core'
+    import { useSeoMeta } from '@unhead/vue'
     import { zlibSync, unzlibSync } from 'fflate';
     import config from '@/config.json'
+    import mpl from '@mapbox/polyline'
 
     import * as GMaps from '@googlemaps/js-api-loader'
     const { Loader } = GMaps
@@ -42,6 +44,7 @@
 
     let currentMap : google.maps.Map;
     let currentPolygon : google.maps.Polygon;
+    
 
     onMounted(() => {
 
@@ -175,6 +178,21 @@
             strokeColor: `hsl(${hue}, 90%, 50%)`
         });                
     }
+
+    const hslToHex = (h: number, s = 100, l = 50) => {
+        s /= 100; l /= 100;
+        const a = s * Math.min(l, 1 - l);
+        const f = (n: number) => {
+            const k = (n + h / 30) % 12;
+            return l - a * Math.max(-1, Math.min(k - 3, Math.min(9 - k, 1)));
+        };
+        const rgb = [f(0), f(8), f(4)]
+            .map(v => Math.round(v * 255)
+            .toString(16)
+            .padStart(2, '0'))
+            .join('');
+        return rgb;
+    };
 
     const mapUpdated = () => {
         const pos = currentMap.getCenter();
@@ -339,6 +357,26 @@
     watchDebounced(hash,
         (hashval: string) => emits('hashChange', hashval),
         { debounce: 300 })
+
+
+    const encodedPolyline = computed(() => {
+        return mpl.encode([...arrPoly.value.map(p => [p.lat(), p.lng()]), [arrPoly.value[0].lat(), arrPoly.value[0].lng()]]);
+    })
+
+    const staticGoogleMap = computed(() => {
+        const z = Math.max(mapPosition.value[2]-2, 7)
+        const color = hslToHex(getHue(props.density), 90, 50);
+        return `https://maps.googleapis.com/maps/api/staticmap?center=${mapPosition.value[0]},${mapPosition.value[1]}&zoom=${z}&size=600x315&scale=2&path=weight:1|color:0x${color}|fillcolor:0x${color}55|enc:${encodedPolyline.value}&key=${config.google_map.apikey}`;
+    });
+
+    useSeoMeta({
+        ogImage: () => {
+            if (mapLoaded.value && arrPoly.value.length) {
+                return staticGoogleMap.value;
+            }
+        }
+    })
+
 
     defineExpose({
         reset,
