@@ -369,18 +369,18 @@
         return `https://maps.googleapis.com/maps/api/staticmap?center=${mapPosition.value[0]},${mapPosition.value[1]}&zoom=${z}&size=600x315&scale=2&path=weight:1|color:0x${color}|fillcolor:0x${color}55|enc:${encodedPolyline.value}&key=${config.google_map.apikey}`;
     });
 
-    useHead({
-        meta: [
-            {
-                property: 'og:image',
-                content: () => {
-                    if (mapLoaded.value && arrPoly.value.length) {
-                        return staticGoogleMap.value
-                    }
-                }
-            }
-        ]
-    })
+    // useHead({
+    //     meta: [
+    //         {
+    //             property: 'og:image',
+    //             content: () => {
+    //                 if (mapLoaded.value && arrPoly.value.length) {
+    //                     return staticGoogleMap.value
+    //                 }
+    //             }
+    //         }
+    //     ]
+    // })
 
     defineExpose({
         reset,
